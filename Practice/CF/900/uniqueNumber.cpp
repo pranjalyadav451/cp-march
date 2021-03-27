@@ -7,7 +7,6 @@
 #define mp make_pair
 #define f first
 #define s second
-
 #define sz(x) int((x).size())
 #define all(x) (x).begin(), (x).end()
 #define rall(x) (x).rbegin(), (x).rend()
