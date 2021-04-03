@@ -45,10 +45,9 @@ int numSubsetGivenDiff(int n, int arr[], int target)
         }
     }
 
-
     cout << "sum =>" << sum << endl;
     for (size_t i = 0; i < res.size(); i++)
-        cout << res[i] << " " << sum -  res[i] << endl;
+        cout << res[i] << " " << sum - res[i] << endl;
     cout << endl;
 
     int count = 0;
@@ -70,7 +69,6 @@ int main()
     {
         int n;
         cin >> n;
-
 
         int target;
         cin >> target;
