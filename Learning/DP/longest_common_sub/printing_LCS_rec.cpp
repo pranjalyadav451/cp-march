@@ -21,11 +21,11 @@ public:
                 string temp2 = printLcs(x, y - 1, s1, s2);
 
                 if (temp1.size() > temp2.size())
-                    res = temp1 + res;
+                    return temp1;
                 else
-                    res = temp2 + res;
+                    return temp2;
             }
-            return res;
+            // return res;
         }
     }
 };
