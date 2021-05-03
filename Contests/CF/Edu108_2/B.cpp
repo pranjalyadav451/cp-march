@@ -21,18 +21,46 @@ template<typename Head, typename... Tail> void dbg_out(Head H, Tail... T) { cerr
 template<class Fun> class y_combinator_result { Fun fun_; public: template<class T> explicit y_combinator_result(T &&fun): fun_(std::forward<T>(fun)) {} template<class ...Args> decltype(auto) operator()(Args &&...args) { return fun_(std::ref(*this), std::forward<Args>(args)...); } };
 template<class Fun> decltype(auto) y_combinator(Fun &&fun) { return y_combinator_result<std::decay_t<Fun>>(std::forward<Fun>(fun)); }
 #define yc y_combinator
-
 typedef long long ll;
 typedef pair<int, int> pii;
 typedef pair<ll, ll> pll;
 typedef long double ld;
 #define fi first
 #define se second
-#define all(x) (x).begin(),(x).end()
-#define rep(i, a, b) for (int i = (a); i <= (b); (i)++)
-#define rrep(i, a, b) for (int i = (a); i >= (b); (i)--)
+#define sz(x) (int((x).size()))
+#define rep(i, a, b) for (int(i) = (a); i <= (b); (i)++)
+#define rrep(i, a, b) for (int(i) = (a); i >= (b); (i)--)
 #define deb(x) cout << #x << "=" << x << endl
-#define deb2(x, y) cout << #x << ": " << x << "  " << #y << ": " << y << endl
+#define deb2(x, y) cout << #x << "=" << x << "," << #y << "=" << y << endl
+
+
+short dp[101][101][10000];
+
+int solve_rec(int n, int m, int k)
+{
+	if (n == 1 and m == 1)
+	{
+		if (k == 0)
+			return 1;
+		else
+			return 0;
+	}
+
+	if (dp[n][m][k] != -1)
+		return dp[n][m][k];
+
+	int oneWay = 0;
+	int otherWay = 0;
+
+	if (n > 1)
+		oneWay = solve_rec(n - 1, m, k - m);
+	if (m > 1)
+		otherWay = solve_rec(n, m - 1, k - n);
+
+	return dp[n][m][k] = oneWay or otherWay;
+
+}
+
 
 int main()
 {
@@ -40,8 +68,18 @@ int main()
 	cin >> tt;
 	while (tt--)
 	{
+		int n, m, k;
+		cin >> n >> m >> k;
 
+		memset(dp, -1, sizeof(dp));
+
+		if (solve_rec(n, m, k)) cout << "Yes" << endl;
+		else cout << "No" << endl;
 	}
 }
 
 
+/**
+	-> Target sum type question.
+	->
+*/

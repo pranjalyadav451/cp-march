@@ -21,27 +21,49 @@ template<typename Head, typename... Tail> void dbg_out(Head H, Tail... T) { cerr
 template<class Fun> class y_combinator_result { Fun fun_; public: template<class T> explicit y_combinator_result(T &&fun): fun_(std::forward<T>(fun)) {} template<class ...Args> decltype(auto) operator()(Args &&...args) { return fun_(std::ref(*this), std::forward<Args>(args)...); } };
 template<class Fun> decltype(auto) y_combinator(Fun &&fun) { return y_combinator_result<std::decay_t<Fun>>(std::forward<Fun>(fun)); }
 #define yc y_combinator
-
 typedef long long ll;
 typedef pair<int, int> pii;
 typedef pair<ll, ll> pll;
 typedef long double ld;
 #define fi first
 #define se second
-#define all(x) (x).begin(),(x).end()
-#define rep(i, a, b) for (int i = (a); i <= (b); (i)++)
-#define rrep(i, a, b) for (int i = (a); i >= (b); (i)--)
+#define sz(x) (int((x).size()))
+#define rep(i, a, b) for (int(i) = (a); i <= (b); (i)++)
+#define rrep(i, a, b) for (int(i) = (a); i >= (b); (i)--)
 #define deb(x) cout << #x << "=" << x << endl
-#define deb2(x, y) cout << #x << ": " << x << "  " << #y << ": " << y << endl
+#define deb2(x, y) cout << #x << "=" << x << "," << #y << "=" << y << endl
 
 int main()
 {
-	int tt;
-	cin >> tt;
-	while (tt--)
+	int N, D, H;
+	cin >> N >> D >> H;
+
+	int dis[N];
+	int height[N];
+
+	ll mxObs = -1;
+	for (int i = 0; i < N; i++)
+	{
+		cin >> dis[i] >> height[i];
+		mxObs = max(mxObs, (ll)height[i]);
+	}
+
+	if (mxObs == H)
+	{
+		cout << H << endl;
+		return 0;
+	}
+
+
+	ld req = H;
+	ld ans = 0;
+	for (int i = 0; i < N; i++)
 	{
 
+		req = ((ld)D * (ld)height[i] - (ld)dis[i] * (ld) H) / ((ld)D - (ld) dis[i]);
+		ans = max(ans, req);
 	}
+
+	cout << ans << endl;
+
 }
-
-

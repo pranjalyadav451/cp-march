@@ -1,6 +1,7 @@
 a.exe
 main
 debug
-inputf.in
-outputf.in
-
+**/.cph
+*.in
+*.out
+*.cpp__tests

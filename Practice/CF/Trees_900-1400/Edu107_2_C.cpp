@@ -21,27 +21,60 @@ template<typename Head, typename... Tail> void dbg_out(Head H, Tail... T) { cerr
 template<class Fun> class y_combinator_result { Fun fun_; public: template<class T> explicit y_combinator_result(T &&fun): fun_(std::forward<T>(fun)) {} template<class ...Args> decltype(auto) operator()(Args &&...args) { return fun_(std::ref(*this), std::forward<Args>(args)...); } };
 template<class Fun> decltype(auto) y_combinator(Fun &&fun) { return y_combinator_result<std::decay_t<Fun>>(std::forward<Fun>(fun)); }
 #define yc y_combinator
-
 typedef long long ll;
 typedef pair<int, int> pii;
 typedef pair<ll, ll> pll;
 typedef long double ld;
 #define fi first
 #define se second
-#define all(x) (x).begin(),(x).end()
-#define rep(i, a, b) for (int i = (a); i <= (b); (i)++)
-#define rrep(i, a, b) for (int i = (a); i >= (b); (i)--)
+#define sz(x) (int((x).size()))
+#define rep(i, a, b) for (int(i) = (a); i <= (b); (i)++)
+#define rrep(i, a, b) for (int(i) = (a); i >= (b); (i)--)
 #define deb(x) cout << #x << "=" << x << endl
-#define deb2(x, y) cout << #x << ": " << x << "  " << #y << ": " << y << endl
+#define deb2(x, y) cout << #x << "=" << x << "," << #y << "=" << y << endl
 
-int main()
+map<int, int>position;
+int solve(int t)
 {
-	int tt;
-	cin >> tt;
-	while (tt--)
-	{
+	auto it = position.find(t);
+	int ans = it->second;
 
+	for (auto &a : position)
+	{
+		if (ans > a.second)
+			a.second++;
 	}
+	it->second = 1;
+	return ans;
 }
 
 
+int main()
+{
+	int n, q;
+	cin >> n >> q;
+
+	int arr[n];
+
+	for (int i = 0; i < n; i++)
+	{
+		cin >> arr[i];
+		if (position.empty() or position.count(arr[i]) == 0)
+			position.insert({arr[i], i + 1});
+	}
+
+	while (q--)
+	{
+		int t;
+		cin >> t;
+		cout << solve(t) << " ";
+	}
+}
+
+/**
+* The whole question rested on the rotate function :
+	->	rotate(firstPosIterator,middlePosIterator,lastPosIterator);
+		- firstPos : This is the position from where the rotation will start.
+		- middlePos : The element which will come to the first iterator after rotation.
+		- lastPos : Upto which the rotation will be done (not inclusive).
+*/

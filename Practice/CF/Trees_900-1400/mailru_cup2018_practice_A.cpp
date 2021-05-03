@@ -21,27 +21,66 @@ template<typename Head, typename... Tail> void dbg_out(Head H, Tail... T) { cerr
 template<class Fun> class y_combinator_result { Fun fun_; public: template<class T> explicit y_combinator_result(T &&fun): fun_(std::forward<T>(fun)) {} template<class ...Args> decltype(auto) operator()(Args &&...args) { return fun_(std::ref(*this), std::forward<Args>(args)...); } };
 template<class Fun> decltype(auto) y_combinator(Fun &&fun) { return y_combinator_result<std::decay_t<Fun>>(std::forward<Fun>(fun)); }
 #define yc y_combinator
-
 typedef long long ll;
 typedef pair<int, int> pii;
 typedef pair<ll, ll> pll;
 typedef long double ld;
 #define fi first
 #define se second
-#define all(x) (x).begin(),(x).end()
-#define rep(i, a, b) for (int i = (a); i <= (b); (i)++)
-#define rrep(i, a, b) for (int i = (a); i >= (b); (i)--)
+#define sz(x) (int((x).size()))
+#define rep(i, a, b) for (int i = (a); i <= (b); i++)
+#define rrep(i, a, b) for (int i = a; i >= (b); i--)
 #define deb(x) cout << #x << "=" << x << endl
-#define deb2(x, y) cout << #x << ": " << x << "  " << #y << ": " << y << endl
+#define deb2(x, y) cout << #x << "=" << x << "," << #y << "=" << y << endl
 
-int main()
+vector<int>path ;
+
+bool dfs(vector<int>graph[], int n, int i = 1)
 {
-	int tt;
-	cin >> tt;
-	while (tt--)
+	if (i == n)
 	{
-
+		return true;
 	}
+
+	for (int a : graph[i])
+	{
+		if (dfs(graph, n, a))
+		{
+			path.push_back(a);
+			return true;
+		}
+	}
+	return false;
 }
 
 
+
+
+void print(vector<int>graph[], int n)
+{
+	dfs(graph, n);
+	path.push_back(1);
+	reverse(path.begin(), path.end());
+
+	for (int a : path)
+		cout << a << " ";
+	cout << endl;
+
+}
+
+int main()
+{
+	int n;
+	cin >> n;
+
+	vector<int>graph[n];
+
+	int x;
+	rep(j, 2, n)
+	{
+		cin >> x;
+		graph[x].push_back(j);
+	}
+
+	print(graph, n);
+}
