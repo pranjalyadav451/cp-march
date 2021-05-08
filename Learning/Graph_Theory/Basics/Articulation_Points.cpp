@@ -24,7 +24,7 @@ void dfs(int v, int p = -1) {
         else {
             dfs(to, v);
             low[v] = min(low[v], low[to]);
-            if (low[to] > tin[v])
+            if (low[to] >= tin[v])
                 IS_BRIDGE(v, to);
         }
     }

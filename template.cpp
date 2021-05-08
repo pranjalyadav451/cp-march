@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+#include <stack>
 using namespace std;
 int fastio() { ios_base::sync_with_stdio(false); cout << fixed << setprecision(10); cin.tie(nullptr); return 0; }
 int __fastio = fastio();
@@ -40,7 +41,14 @@ int main()
 	cin >> tt;
 	while (tt--)
 	{
-
+		int A, B;
+		cin >> A >> B;
+		int n;
+		cin >> n;
+		vector<int> sorted(n);
+		for (int &a : sorted) {
+			cin >> a;
+		}
 	}
 }
 

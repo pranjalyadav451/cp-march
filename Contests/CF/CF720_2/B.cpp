@@ -34,17 +34,14 @@ typedef long double ld;
 #define deb(x) cout << #x << "=" << x << endl
 #define deb2(x, y) cout << #x << ": " << x << "  " << #y << ": " << y << endl
 
-void solve() {
-	int64_t A, B;
-	cin >> A >> B;
+void test_case() {
+	int n;
+	cin >> n;
+	vector<ll>arr(n);
+	for (ll &a : arr) {
+		cin >> a;
+	}
 
-	if (B == 1) {
-		cout << "NO" << endl;
-	}
-	else {
-		cout << "YES" << endl;
-		cout << A*(B - 1) << " " << A*(B + 1) << " " << 2 * A*B << endl;
-	}
 }
 
 int main()
@@ -53,10 +50,11 @@ int main()
 	cin >> tt;
 	while (tt--)
 	{
-		int n;
-		cin >> n;
-		while (n--) {
-			solve();
-		}
+		test_case();
 	}
 }
+
+/**
+ * Question related to the properties of GCD.
+ * If you want to make the gcd(a,b) = 1, just make abs(a-b) = 1.
+*/

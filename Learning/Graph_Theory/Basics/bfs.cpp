@@ -18,7 +18,6 @@ public:
         while (q.empty() == false)
         {
             i = q.front();
-            visited[i] = true;
             res.push_back(i);
             q.pop();
 

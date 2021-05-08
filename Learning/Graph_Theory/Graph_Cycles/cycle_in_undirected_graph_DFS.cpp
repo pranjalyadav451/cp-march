@@ -1,8 +1,6 @@
-// { Driver Code Starts
 #include<bits/stdc++.h>
 using namespace std;
 
-// } Driver Code Ends
 class Solution {
 public:
 	bool visited[10001] ;
@@ -10,18 +8,19 @@ public:
 	bool cycle_helper(int node, vector<int> adj[], int parent)
 	{
 		visited[node] = true;
-
 		for (int a : adj[node])
 		{
-			if (not visited[a])
-			{
-				return cycle_helper(a, adj, node);
-			}
-			else
-			{
-				if (a != parent)
+			/** This is just a check to avoid the infinite loop condition. */
+			if (a == parent) continue;
+
+			if (visited[a] == false) {
+				if (cycle_helper(a, adj, node))
 					return true;
 			}
+			else {
+				return true;
+			}
+
 		}
 		return false;
 	}
@@ -41,7 +40,6 @@ public:
 	}
 };
 
-// { Driver Code Starts.
 int main() {
 	int tc;
 	cin >> tc;
@@ -62,4 +60,4 @@ int main() {
 		else cout << "0\n";
 	}
 	return 0;
-}  // } Driver Code Ends
+}

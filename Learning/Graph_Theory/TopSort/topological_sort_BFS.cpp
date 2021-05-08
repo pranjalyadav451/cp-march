@@ -1,34 +1,44 @@
 #include <bits/stdc++.h>
+#include <limits.h>
+#include <utility>
+#define deb(x) cout << #x << ": " << x << endl
+#define deb2(x, y) cout << #x << ": " << x << ", " << #y << ": " << y << endl
 using namespace std;
 
 
-
-
+const int N = 1e5 + 10;
+int indegree[N];
 class Solution {
 public:
-    void dfs(vector<int> adj[], bool visited[], stack<int> &tops, int i = 0) {
-        if (visited[i])
-            return;
-        visited[i] = true;
-        for (int a : adj[i]) {
-            if (visited[a] == false) {
-                dfs(adj, visited, tops, a);
-            }
-        }
-        tops.push(i);
-    }
     vector<int> topoSort(int V, vector<int> adj[]) {
-        bool visited[V] = { 0 };
-        stack<int>tops;
+        memset(indegree, 0, sizeof(indegree));
+        queue<int> q;
+        vector<int>res;
+
         for (int i = 0; i < V; i++) {
-            if (visited[i] == false) {
-                dfs(adj, visited, tops, i);
+            for (int a : adj[i]) {
+                indegree[a]++;
             }
         }
-        vector<int>res;
-        while (tops.empty() == false) {
-            res.push_back(tops.top());
-            tops.pop();
+
+        for (int i = 0; i < V; i++) {
+            if (indegree[i] == 0) {
+                q.push(i);
+            }
+        }
+        int temp = 0;
+        /**
+        * Top sort is only valid for directed acyclic graphs, that's why we do not need a visited array to keep track of elements' visited state.
+        */
+        while (q.empty() == false) {
+            temp = q.front();
+            q.pop();
+            res.push_back(temp);
+            for (int a : adj[temp]) {
+                indegree[a]--;
+                if (indegree[a] == 0)
+                    q.push(a);
+            }
         }
         return res;
     }
@@ -41,7 +51,9 @@ public:
 *   *res: array containing elements in topological sorted form
 *   adj[]: graph input
 */
+
 int check(int V, vector <int> &res, vector<int> adj[]) {
+
     vector<int> map(V, -1);
     for (int i = 0; i < V; i++) {
         map[res[i]] = i;
@@ -52,6 +64,7 @@ int check(int V, vector <int> &res, vector<int> adj[]) {
         }
     }
     return 1;
+
 }
 
 int main() {
