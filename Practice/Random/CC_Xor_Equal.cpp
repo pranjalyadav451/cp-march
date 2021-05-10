@@ -34,65 +34,50 @@ typedef long double ld;
 #define deb(x) cout << #x << "=" << x << endl
 #define deb2(x, y) cout << #x << ": " << x << "  " << #y << ": " << y << endl
 
-const int N = 1e4 + 1;
-int parent[N];
-int cap[N];
-
-int get_root(int u) {
-	if (parent[u] == -1) return u;
-	return parent[u] = get_root(parent[u]);
-}
-
-void merge(int u, int v) {
-	if (cap[u] >= cap[v]) {
-		parent[v] = u;
-		cap[u] += cap[v];
-		return;
+const ll MOD = 1e9 + 7;
+/*
+ * My implementation of binary exponentiation.
+ll binary_exp(ll b, ll p) {
+	b = b % MOD;
+	ll ans = 1;
+	while (p > 0) {
+		if (p % 2 == 1) {
+			p--;
+			ans = (ans % MOD) * (b % MOD);
+		}
+		else {
+			b = ((b % MOD ) * (b % MOD )) % MOD;
+			p /= 2;
+		}
+		ans = ans % MOD;
 	}
-	else merge(v, u);
+	return ans;
+}
+*/
+/** CP-Algorithms Implementation*/
+ll binpow(ll num, ll exp, ll mod) {
+	num %= mod;
+	long long res = 1;
+	while ( exp > 0) {
+		if (exp % 2 == 1)
+			res = res * num % mod;
+		num = num * num % mod;
+		exp = (exp / 2);
+	}
+	return res;
 }
 
+void solve( ll N ) {
+	ll ans = binpow(2, N - 1, MOD);
+	cout << ans << endl;
+}
 
 int main() {
-	int n;
-	cin >> n;
-
-	for (int i = 1; i <= n; i++) {
-		parent[i] = -1;
-		cap[i] = 1;
-	}
-
-	int q;
-	cin >> q;
-	while (q--) {
-		string qtype;
-		int u, v;
-		cin >> qtype >> u >> v;
-
-
-		int u_root = get_root(u);
-		int v_root = get_root(v);
-		if (qtype == "M") {
-			if (u_root == v_root) {
-				cout << "Do Nothing" << endl;
-			}
-			else merge(u, v);
-		}
-		else if (qtype == "A") {
-			/* You need to answer if 'u' and 'v' belong to the same set*/
-			if (u_root == v_root) {
-				cout << "YES" << endl;
-				cout << "u and v belong to the same set: " << u_root << endl;
-			}
-			else {
-				cout << "NO, they do not belong to same set.\n" << "u belongs to: " << u_root << "\t" << "v belongs to: " << v_root << endl;
-			}
-		}
+	int tt;
+	cin >> tt;
+	while (tt--) {
+		ll N;
+		cin >> N;
+		solve(N);
 	}
 }
-
-/**
- * Two optimizations -:
- 	- size heuristics
- 	- path compression
-*/

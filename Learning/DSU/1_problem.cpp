@@ -1,4 +1,6 @@
+#include <algorithm>
 #include <bits/stdc++.h>
+#include <stdlib.h>
 using namespace std;
 int fastio() { ios_base::sync_with_stdio(false); cout << fixed << setprecision(10); cin.tie(nullptr); return 0; }
 int __fastio = fastio();
@@ -34,65 +36,46 @@ typedef long double ld;
 #define deb(x) cout << #x << "=" << x << endl
 #define deb2(x, y) cout << #x << ": " << x << "  " << #y << ": " << y << endl
 
-const int N = 1e4 + 1;
-int parent[N];
-int cap[N];
-
-int get_root(int u) {
-	if (parent[u] == -1) return u;
-	return parent[u] = get_root(parent[u]);
-}
-
-void merge(int u, int v) {
-	if (cap[u] >= cap[v]) {
-		parent[v] = u;
-		cap[u] += cap[v];
-		return;
-	}
-	else merge(v, u);
-}
-
-
-int main() {
-	int n;
-	cin >> n;
-
-	for (int i = 1; i <= n; i++) {
-		parent[i] = -1;
-		cap[i] = 1;
-	}
-
-	int q;
-	cin >> q;
-	while (q--) {
-		string qtype;
-		int u, v;
-		cin >> qtype >> u >> v;
-
-
-		int u_root = get_root(u);
-		int v_root = get_root(v);
-		if (qtype == "M") {
-			if (u_root == v_root) {
-				cout << "Do Nothing" << endl;
-			}
-			else merge(u, v);
-		}
-		else if (qtype == "A") {
-			/* You need to answer if 'u' and 'v' belong to the same set*/
-			if (u_root == v_root) {
-				cout << "YES" << endl;
-				cout << "u and v belong to the same set: " << u_root << endl;
-			}
-			else {
-				cout << "NO, they do not belong to same set.\n" << "u belongs to: " << u_root << "\t" << "v belongs to: " << v_root << endl;
-			}
-		}
-	}
-}
-
 /**
- * Two optimizations -:
- 	- size heuristics
- 	- path compression
+ * You have 'n' persons standing at 'n' positions.
+ * - X : means the person has left.
+ * ? X : find the nearest person to the right (including the position of 'X') who hasn't left.
+ * If there is no one standing to the right, then return -1.
+ * N <=10^6
+ * Queries <= 10^6
 */
+const int N = 1e6 + 10;
+int parent[N];
+int Get(vector<int> & parent , int x) {
+	if (parent[x] == -1) return parent[x];
+	return parent[x] = ((parent[x] == x) ? x : Get(parent, parent[x]));
+}
+void Union(vector<int> & parent, int left, int right) {
+	int p_left = Get(parent, left), p_right = Get(parent, right);
+	parent[p_left] = p_right;
+}
+
+
+int main()
+{
+	int N, M;
+	cin >> N >> M;
+	vector<int> parent(N + 5);
+	for (int i = 1; i <= parent.size(); i++) {
+		parent[i] = i;
+	}
+	while (M--) {
+		char ch;
+		int pos;
+		cin >> ch >> pos;
+		if (ch == '-') {
+			Union(parent, pos, pos + 1);
+		}
+		if (ch == '?') {
+			int res = Get(parent, pos);
+			if (res == N + 1) cout << -1 << endl;
+			else cout << res << endl;
+		}
+	}
+
+}

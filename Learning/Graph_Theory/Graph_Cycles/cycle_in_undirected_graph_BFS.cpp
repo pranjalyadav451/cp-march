@@ -2,6 +2,14 @@
 #include <utility>
 using namespace std;
 
+/***
+ ! ...................
+ ? How does this work.
+ * Ans : Same logic as DFS, i.e. if a visited node other than the parent node is being
+ * visited again, then the graph has cycles.
+*/
+
+
 class Solution {
 public:
 	bool visited[10001] ;

@@ -37,8 +37,7 @@ public:
 		memset(color, -1, sizeof(color));
 		for (int i = 0; i < V; i++)
 		{
-			if (color[i] == -1)
-			{
+			if (color[i] == -1) {
 				if (bfs(i, adj) == false)
 					return false;
 			}
