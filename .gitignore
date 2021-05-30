@@ -1,4 +1,4 @@
-a.exe
+*.exe
 main
 debug
 **/.cph

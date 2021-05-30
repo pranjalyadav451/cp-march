@@ -15,18 +15,14 @@ public:
 		s.insert({ 0, S });
 
 		while (s.empty() == false) {
-
 			int d = s.begin()->first, node = s.begin()->second;
 			s.erase(s.begin());
-
 			if (visited[node]) continue;
 			visited[node] = true;
 			res[node] = d;
-
 			for (auto tmp : adj[node]) {
-				s.insert({ tmp[1] + d,tmp[0] });
+				s.insert({ tmp[1] + d, tmp[0] });
 			}
-
 		}
 		return res;
 	}

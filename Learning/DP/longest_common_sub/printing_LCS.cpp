@@ -29,19 +29,18 @@ public:
                 else
                     dp[i][j] = max(dp[i - 1][j], dp[i][j - 1]);
             }
-            printList(dp[i], y + 1);
         }
 
 
-
-
-        cout << dp[x][y] << endl;
+        for (int i = 0; i <= x; i++) {
+            printList(dp[i], y + 1);
+        }
+        cout << endl;
         string res;
 
 
 
-        for (int i = x, j = y; i >= 1 && j >= 1;)
-        {
+        for (int i = x, j = y; i >= 1 && j >= 1;) {
             if (s1[i - 1] == s2[j - 1])
             {
                 res.push_back(s1[i - 1]);
@@ -49,7 +48,7 @@ public:
             }
             else
             {
-                if (dp[i - 1][j] >= dp[i][j - 1])
+                if (dp[i - 1][j] > dp[i][j - 1])
                     i--;
                 else
                     j--;

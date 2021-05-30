@@ -1,6 +1,3 @@
-// { Driver Code Starts
-//Initial template for C++
-
 #include <bits/stdc++.h>
 using namespace std;
 void SCS(string x, string y, int m, int n);
@@ -34,10 +31,8 @@ void SCS(string x, string y, int m, int n)
     for (int i = 0; i <= n; i++)
         dp[0][i] = i;
 
-    for (int i = 1; i <= m; i++)
-    {
-        for (int j = 1; j <= n; j++)
-        {
+    for (int i = 1; i <= m; i++) {
+        for (int j = 1; j <= n; j++) {
             if (x[i - 1] == y[j - 1])
                 dp[i][j] = dp[i - 1][j - 1] + 1;
             else
@@ -97,6 +92,6 @@ string printSCS(string x, string y, int m, int n)
             i--;
         }
     }
-    reverse(res.begin(),res.end());
+    reverse(res.begin(), res.end());
     return res;
 }

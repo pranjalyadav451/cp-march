@@ -5,11 +5,14 @@ ll knapSack(int w, int wt[], int val[], int n)
 {
     // recursive approach
     // => base condition
+
+    // base condition can also just be :
+    // if(n==0) return 0;
     if (n == 0 or w == 0)
         return 0;
     else
     {
-        if (wt[n - 1] < w)        {
+        if (wt[n - 1] <= w)        {
             return max(knapSack(w - wt[n - 1], wt, val, n - 1) + val[n - 1], knapSack(w, wt, val, n - 1));
         }
         else
