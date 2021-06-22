@@ -1,8 +1,7 @@
 #include <bits/stdc++.h>
 #define ll long long
 using namespace std;
-int countSubsetSum(int n, int arr[], int target)
-{
+int countSubsetSum(int n, int arr[], int target) {
 }
 
 int main()

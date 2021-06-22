@@ -6,10 +6,20 @@
                 "${workspaceFolder}/**"
             ],
             "defines": [],
-            "compilerPath": "/usr/bin/gcc",
-            "cStandard": "gnu11",
-            "cppStandard": "gnu++14",
+            "compilerPath": "/usr/bin/g++",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
             "intelliSenseMode": "linux-gcc-x64"
+        },
+        {
+            "name": "Windows",
+            "includePath": [
+                "${workspaceFolder}/**"
+            ],
+            "compilerPath": "C:/MINGW/mingw64/bin/g++.exe",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "windows-gcc-x64"
         }
     ],
     "version": 4
